@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RonBot | Yeni Nesil MMORPG Otomasyon Sistemi</title>
+  <meta name="description" content="Mobile2 (Yakamoz, Alesta, Tuva), Meta2, Royale2 ve Tarantin2 için geliştirilmiş yüksek performanslı otomasyon sistemi RonBot." />
+  <meta name="theme-color" content="#050508" />
+
+  <!-- Türkçe Karakter Destekli Fütüristik Fontlar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Dinamik Canvas Arka Plan & Tarama Çizgileri -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="ambient-orb orb-1" aria-hidden="true"></div>
+  <div class="ambient-orb orb-2" aria-hidden="true"></div>
+
+  <!-- Üst Menü (HUD Navbar) -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand" aria-label="RonBot Ana Sayfa">
+        <div class="brand-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2L36 11V29L20 38L4 29V11L20 2Z" stroke="url(#grad1)" stroke-width="2" fill="rgba(255, 30, 66, 0.1)" />
+            <path d="M13 27V13H21.5C24.5 13 26.5 14.8 26.5 17.5C26.5 19.6 25.1 21.1 23 21.6L27 27H23L19.5 22H16.5V27H13ZM16.5 19.2H21C22.3 19.2 23.1 18.5 23.1 17.5C23.1 16.5 22.3 15.8 21 15.8H16.5V19.2Z" fill="#ffffff" />
+            <defs>
+              <linearGradient id="grad1" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff1e42" />
+                <stop offset="1" stop-color="#00f0ff" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">RON<span class="accent">BOT</span></span>
+          <span class="brand-tag">AUTOMATION ENGINE</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#oyunlar" class="nav-link">Oyunlar</a>
+        <a href="#moduller" class="nav-link">Özellikler</a>
+        <a href="#nasil-alinir" class="nav-link">Satın Alma</a>
+        <a href="#destek" class="nav-link">Destek &amp; Ekip</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="status-pill" title="Tüm sistemler aktif">
+          <span class="pulse-dot"></span>
+          <span>SİSTEM AKTİF</span>
+        </div>
+        <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          <span>Satın Al</span>
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menüyü Aç/Kapat" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO BÖLÜMÜ -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span>NEXT-GEN MMORPG OTOMASYON MİMARİSİ</span>
+          </div>
+
+          <h1 class="hero-title">
+            OYUNU DEĞİL,<br />
+            <span class="glitch-text" data-text="SİSTEMİ YÖNET.">SİSTEMİ YÖNET.</span>
+          </h1>
+
+          <p class="hero-desc">
+            <strong>Mobile2</strong> (Yakamoz, Alesta, Tuva), <strong>Meta2</strong>, <strong>Royale2</strong> ve <strong>Tarantin2</strong> için sıfırdan optimize edilmiş yüksek kararlılıklı otomasyon gücü. Tüm satış operasyonları <strong>OyunAlışveriş</strong> güvencesiyle, kurulum ve birebir destek <strong>Telegram</strong> üzerinden anında sağlanır.
+          </p>
+
+          <div class="hero-cta">
+            <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>OyunAlışveriş Mağazası</span>
+            </a>
+
+            <a href="https://t.me/+qNX1vLlbNxlmMThk" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              <span>Global Telegram Grubu</span>
+            </a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <span class="metric-val">04</span>
+              <span class="metric-label">Aktif Oyun Altyapısı</span>
+            </div>
+            <div class="metric-sep"></div>
+            <div class="metric-item">
+              <span class="metric-val">7/24</span>
+              <span class="metric-label">Yazılı &amp; Sesli Destek</span>
+            </div>
+            <div class="metric-sep"></div>
+            <div class="metric-item">
+              <span class="metric-val">%100</span>
+              <span class="metric-label">Güvenli Mağaza Satışı</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Etkileşimli RonBot Canlı HUD Konsolu -->
+        <div class="hero-visual reveal delay-1">
+          <div class="hud-frame">
+            <div class="hud-header">
+              <div class="hud-dots">
+                <span class="dot red"></span>
+                <span class="dot amber"></span>
+                <span class="dot cyan"></span>
+              </div>
+              <div class="hud-title">RONBOT_CORE // TELEMETRY_HUD</div>
+              <div class="hud-badge">ONLINE</div>
+            </div>
+
+            <div class="hud-tabs" role="tablist" aria-label="Oyun Seçimi">
+              <button class="hud-tab active" data-game="mobile2" role="tab" aria-selected="true">Mobile2</button>
+              <button class="hud-tab" data-game="meta2" role="tab" aria-selected="false">Meta2</button>
+              <button class="hud-tab" data-game="royale2" role="tab" aria-selected="false">Royale2</button>
+              <button class="hud-tab" data-game="tarantin2" role="tab" aria-selected="false">Tarantin2</button>
+            </div>
+
+            <div class="hud-body">
+              <div class="hud-status-grid">
+                <div class="hud-stat">
+                  <span class="hud-stat-label">HEDEF İSTEMCİ</span>
+                  <span class="hud-stat-val" id="hud-client">Mobile2 [TR]</span>
+                </div>
+                <div class="hud-stat">
+                  <span class="hud-stat-label">SUNUCU KAPSAMI</span>
+                  <span class="hud-stat-val cyan-text" id="hud-servers">Yakamoz • Alesta • Tuva</span>
+                </div>
+                <div class="hud-stat">
+                  <span class="hud-stat-label">KORUMA KALKANI</span>
+                  <span class="hud-stat-val green-text">GM &amp; PM SHIELD AKTİF</span>
+                </div>
+                <div class="hud-stat">
+                  <span class="hud-stat-label">MOTOR DURUMU</span>
+                  <span class="hud-stat-val" id="hud-engine">Stabil / Enjekte Hazır</span>
+                </div>
+              </div>
+
+              <div class="hud-modules">
+                <div class="module-chip active"><span class="chip-led"></span>Rota &amp; Oto Farm</div>
+                <div class="module-chip active"><span class="chip-led"></span>WaitHack / 7x</div>
+                <div class="module-chip active"><span class="chip-led"></span>Pazar Tarama</div>
+                <div class="module-chip active"><span class="chip-led"></span>Loot Filtresi</div>
+                <div class="module-chip active"><span class="chip-led"></span>Balık Botu</div>
+                <div class="module-chip active"><span class="chip-led"></span>Oto Bağırma</div>
+              </div>
+
+              <div class="hud-terminal" id="hud-terminal" aria-live="polite">
+                <!-- JS tarafından canlı log akışı doldurulur -->
+              </div>
+
+              <div class="hud-footer-bar">
+                <div class="bar-label">
+                  <span>OPTİMİZASYON VERİMİ</span>
+                  <span class="cyan-text" id="hud-perf">99.4%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="hud-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AKAN ŞERİT (TICKER) -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track">
+        <span>MOBILE2</span><span class="sep">///</span>
+        <span>YAKAMOZ • ALESTA • TUVA</span><span class="sep">///</span>
+        <span>META2</span><span class="sep">///</span>
+        <span>ROYALE2</span><span class="sep">///</span>
+        <span>TARANTIN2</span><span class="sep">///</span>
+        <span>OYUNALISVERIS.COM GÜVENCESİYLE</span><span class="sep">///</span>
+        <span>TELEGRAM YAZILI &amp; SESLİ DESTEK</span><span class="sep">///</span>
+        <span>MOBILE2</span><span class="sep">///</span>
+        <span>YAKAMOZ • ALESTA • TUVA</span><span class="sep">///</span>
+        <span>META2</span><span class="sep">///</span>
+        <span>ROYALE2</span><span class="sep">///</span>
+        <span>TARANTIN2</span><span class="sep">///</span>
+        <span>OYUNALISVERIS.COM GÜVENCESİYLE</span><span class="sep">///</span>
+        <span>TELEGRAM YAZILI &amp; SESLİ DESTEK</span><span class="sep">///</span>
+      </div>
+    </div>
+
+    <!-- DESTEKLENEN OYUNLAR -->
+    <section class="section" id="oyunlar">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-tag">AKTİF PROJELER // 01</div>
+          <h2 class="section-title">Desteklenen <span class="accent">Oyunlar</span></h2>
+          <p class="section-sub">
+            RonBot altyapısı aşağıdaki oyunlar için özel olarak kalibre edilmiştir. Her oyun için resmi bağlantıya ulaşabilir veya doğrudan lisans temin edebilirsiniz.
+          </p>
+        </div>
+
+        <div class="games-grid">
+          <!-- 1. Mobile2 -->
+          <article class="game-card spotlight-card reveal">
+            <div class="card-top">
+              <span class="game-index">01</span>
+              <span class="status-badge"><span class="pulse-dot sm"></span>AKTİF</span>
+            </div>
+            <h3 class="game-name">Mobile2</h3>
+            <p class="game-desc">
+              Mobile2 ekosistemine özel geliştirilmiş tam entegre otomasyon paketi. Yüksek yoğunluklu sunucularda kesintisiz farm, pazar tarama ve güvenlik koruması.
+            </p>
+            <div class="server-tags">
+              <span class="server-pill">Yakamoz</span>
+              <span class="server-pill">Alesta</span>
+              <span class="server-pill">Tuva</span>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                <span>Satın Al</span>
+              </a>
+              <a href="https://www.mobile2.com/tr-tr/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                <span>Resmi Site</span>
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- 2. Meta2 -->
+          <article class="game-card spotlight-card reveal delay-1">
+            <div class="card-top">
+              <span class="game-index">02</span>
+              <span class="status-badge"><span class="pulse-dot sm"></span>AKTİF</span>
+            </div>
+            <h3 class="game-name">Meta2</h3>
+            <p class="game-desc">
+              Meta2 sunucu yapısına uyumlu hızlı tepki veren saldırı optimizasyonu, rota kaydı ve akıllı eşya toplama motoru ile rakiplerinin önüne geç.
+            </p>
+            <div class="server-tags">
+              <span class="server-pill cyan">Tam Sunucu Desteği</span>
+              <span class="server-pill">Güncel Sürüm</span>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                <span>Satın Al</span>
+              </a>
+              <a href="https://meta2online.com/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                <span>Resmi Site</span>
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- 3. Royale2 -->
+          <article class="game-card spotlight-card reveal delay-2">
+            <div class="card-top">
+              <span class="game-index">03</span>
+              <span class="status-badge"><span class="pulse-dot sm"></span>AKTİF</span>
+            </div>
+            <h3 class="game-name">Royale2</h3>
+            <p class="game-desc">
+              Royale2 oyuncuları için düşük kaynak tüketimli, akıcı ve uzun süreli oturumlarda dahi performans kaybı yaşatmayan gelişmiş otomasyon altyapısı.
+            </p>
+            <div class="server-tags">
+              <span class="server-pill cyan">Tam Sunucu Desteği</span>
+              <span class="server-pill">Güncel Sürüm</span>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                <span>Satın Al</span>
+              </a>
+              <a href="https://www.royale.com.tr/tr" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                <span>Resmi Site</span>
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- 4. Tarantin2 -->
+          <article class="game-card spotlight-card reveal delay-3">
+            <div class="card-top">
+              <span class="game-index">04</span>
+              <span class="status-badge"><span class="pulse-dot sm"></span>AKTİF</span>
+            </div>
+            <h3 class="game-name">Tarantin2</h3>
+            <p class="game-desc">
+              Tarantin2 evreninde maksimum verim için özel olarak uyarlanmış farm döngüleri, akıllı filtreleme ve anlık güncelleme desteğiyle kesintisiz güç.
+            </p>
+            <div class="server-tags">
+              <span class="server-pill cyan">Tam Sunucu Desteği</span>
+              <span class="server-pill">Güncel Sürüm</span>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                <span>Satın Al</span>
+              </a>
+              <a href="https://www.tarantin2.com/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                <span>Resmi Site</span>
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÖZELLİKLER / BENTO GRID -->
+    <section class="section" id="moduller">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-tag">SİSTEM MİMARİSİ // 02</div>
+          <h2 class="section-title">Neden <span class="accent">RonBot?</span></h2>
+          <p class="section-sub">
+            Sıradan makro araçlarından farklı olarak hız, kararlılık ve kontrolü tek bir karanlık komuta merkezinde birleştirir.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          <div class="bento-card bento-wide spotlight-card reveal">
+            <div class="bento-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3>Yüksek Hızlı Farm &amp; Rota Motoru</h3>
+            <p>
+              Kendi özel farm rotalarını saniyeler içinde kaydet, saldırı hızı ve WaitHack / 7x limitlerini manuel olarak ince ayarla. En zorlu haritalarda dahi takılma olmadan akıcı döngü sağla.
+            </p>
+          </div>
+
+          <div class="bento-card spotlight-card reveal delay-1">
+            <div class="bento-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>GM &amp; PM Koruma Kalkanı</h3>
+            <p>
+              Anlık GM görünürlük/sohbet tespiti, özelleştirilebilir PM yanıt sistemleri ve gelişmiş güvenlik tepkileriyle kontrol her zaman sende.
+            </p>
+          </div>
+
+          <div class="bento-card spotlight-card reveal">
+            <div class="bento-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>Pazar Tarama &amp; Akıllı Loot</h3>
+            <p>
+              Sadece belirlediğin değerli eşyaları toplayan hassas filtreleme ve piyasa fırsatlarını yakalayan gelişmiş pazar tarama modülü.
+            </p>
+          </div>
+
+          <div class="bento-card spotlight-card reveal delay-1">
+            <div class="bento-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3>Düşük Sistem Yükü</h3>
+            <p>
+              İşlemci ve bellek dostu mimarisi sayesinde çoklu istemci kullanımlarında bilgisayarını yormadan maksimum stabilite sunar.
+            </p>
+          </div>
+
+          <div class="bento-card spotlight-card reveal delay-2">
+            <div class="bento-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3>Aktif Geliştirme &amp; Hızlı Yama</h3>
+            <p>
+              Oyun güncellemelerine hızla adapte olan geliştirici ekibi ve topluluk geri bildirimleriyle sürekli büyüyen modül arşivi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SATIN ALMA & OPERASYON AKIŞI -->
+    <section class="section" id="nasil-alinir">
+      <div class="container">
+        <div class="purchase-banner spotlight-card reveal">
+          <div class="purchase-info">
+            <div class="section-tag">RESMİ SATIŞ KANALI // 03</div>
+            <h2 class="section-title">Tüm Satışlar <span class="accent">OyunAlışveriş</span> Güvencesiyle</h2>
+            <p class="purchase-desc">
+              RonBot tüm lisans ve satış operasyonlarını yalnızca resmi <strong>oyunalisveris.com</strong> mağazası üzerinden yürütmektedir. Sipariş sonrası kurulum ve aktivasyon için destek ekibimizle Telegram üzerinden anında iletişime geçebilirsiniz.
+            </p>
+
+            <div class="steps-row">
+              <div class="step-box">
+                <span class="step-num">01</span>
+                <div>
+                  <h4>Paketi Seç &amp; Satın Al</h4>
+                  <p>OyunAlışveriş resmi mağazamızdan ihtiyacına uygun paketi güvenle tamamla.</p>
+                </div>
+              </div>
+              <div class="step-box">
+                <span class="step-num">02</span>
+                <div>
+                  <h4>Telegram Destek ile Bağlan</h4>
+                  <p><strong>@RonBotMobile2</strong> profiline yazarak yazılı veya sesli kurulum desteği al.</p>
+                </div>
+              </div>
+              <div class="step-box">
+                <span class="step-num">03</span>
+                <div>
+                  <h4>Anında Kullanıma Başla</h4>
+                  <p>Global Chat kanalına katıl, güncellemeleri takip et ve sistemin tadını çıkar.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="purchase-cta">
+              <a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+                <span>Resmi Mağazaya Git (oyunalisveris.com)</span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELEGRAM DESTEK & EKİP MERKEZİ -->
+    <section class="section" id="destek">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-tag">İLETİŞİM &amp; KOMUTA MERKEZİ // 04</div>
+          <h2 class="section-title">Telegram <span class="accent">Destek &amp; Topluluk</span></h2>
+          <p class="section-sub">
+            Tüm teknik destek, sesli/yazılı kurulum yardımı, topluluk duyuruları ve geliştirici iletişimi doğrudan resmi Telegram kanallarımızdan sağlanır.
+          </p>
+        </div>
+
+        <div class="support-grid">
+          <!-- Destek Personeli -->
+          <div class="support-card spotlight-card reveal">
+            <div class="support-badge">YAZILI &amp; SESLİ DESTEK</div>
+            <div class="support-icon-wrap crimson">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <h3>Resmi Destek Personeli</h3>
+            <div class="tg-handle">@RonBotMobile2</div>
+            <p>
+              Bot kurulumu, lisans aktivasyonu, ayar optimizasyonu ve tüm sorularınız için birebir <strong>yazılı ve sesli görüşme</strong> desteği sağlayan yetkili personelimiz.
+            </p>
+            <a href="https://t.me/RonBotMobile2" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+              <span>Telegram'dan Ulaş</span>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Global Chat -->
+          <div class="support-card featured spotlight-card reveal delay-1">
+            <div class="support-badge cyan">RESMİ TOPLULUK KANALI</div>
+            <div class="support-icon-wrap cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>RonBot Global Chat</h3>
+            <div class="tg-handle cyan-text">Telegram Global Grup</div>
+            <p>
+              Yeni sürüm duyuruları, anlık bakım/güncelleme bildirimleri, diğer kullanıcılarla deneyim paylaşımı ve topluluk sohbeti için resmi Telegram grubumuz.
+            </p>
+            <a href="https://t.me/+qNX1vLlbNxlmMThk" target="_blank" rel="noopener noreferrer" class="btn btn-cyan btn-block">
+              <span>Global Gruba Katıl</span>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Geliştirici -->
+          <div class="support-card spotlight-card reveal delay-2">
+            <div class="support-badge">CORE DEVELOPER</div>
+            <div class="support-icon-wrap purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3>RonBot Geliştiricisi</h3>
+            <div class="tg-handle">@ronn_global</div>
+            <p>
+              RonBot çekirdek yazılım mimarisi, yeni oyun entegrasyonları, özel modül talepleri ve doğrudan geliştirici iletişimi için resmi profil.
+            </p>
+            <a href="https://t.me/ronn_global" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block">
+              <span>Geliştirici Profili</span>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="brand">
+          <span class="brand-name">RON<span class="accent">BOT</span></span>
+        </a>
+        <p>
+          Mobile2, Meta2, Royale2 ve Tarantin2 için tasarlanmış yüksek performanslı yeni nesil otomasyon ekosistemi.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Desteklenen Oyunlar</h4>
+        <ul>
+          <li><a href="https://www.mobile2.com/tr-tr/" target="_blank" rel="noopener noreferrer">Mobile2 (Resmi Site)</a></li>
+          <li><a href="https://meta2online.com/" target="_blank" rel="noopener noreferrer">Meta2 (Resmi Site)</a></li>
+          <li><a href="https://www.royale.com.tr/tr" target="_blank" rel="noopener noreferrer">Royale2 (Resmi Site)</a></li>
+          <li><a href="https://www.tarantin2.com/" target="_blank" rel="noopener noreferrer">Tarantin2 (Resmi Site)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Satış &amp; İletişim</h4>
+        <ul>
+          <li><a href="https://www.oyunalisveris.com/urun-kategorileri/tum-urunler?kategori=182&magaza=67273" target="_blank" rel="noopener noreferrer">OyunAlışveriş Resmi Mağaza</a></li>
+          <li><a href="https://t.me/RonBotMobile2" target="_blank" rel="noopener noreferrer">Telegram Destek (@RonBotMobile2)</a></li>
+          <li><a href="https://t.me/+qNX1vLlbNxlmMThk" target="_blank" rel="noopener noreferrer">Telegram Global Chat</a></li>
+          <li><a href="https://t.me/ronn_global" target="_blank" rel="noopener noreferrer">Geliştirici (@ronn_global)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> RonBot. Tüm hakları saklıdır.</p>
+      <p class="footer-note">Resmi satışlar yalnızca OyunAlışveriş üzerinden gerçekleştirilir.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
